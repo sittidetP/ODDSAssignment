@@ -25,9 +25,11 @@ public class ForwardProcess {
         numIndexMap = new LinkedHashMap<>();
     }
     
-    public void StartForwardProcess(int num){
+    public String StartForwardProcess(int num){
         String resultA = A(num);
         String resultB = B(resultA);
+        String resultC = C(resultB);
+        return resultC;
     }
     
     private String A(int num){
@@ -61,7 +63,7 @@ public class ForwardProcess {
     }
     
     private String B(String a){
-        String upperA = a.toUpperCase();
+        String upperA = a.toUpperCase(); //ทำให้สตริงทั้งสายเป็นตัวพิมพ์ใหญ่ทั้งหมด
         int startStrRound = 0;
         String result = "";
         for(Map.Entry entry: numIndexMap.entrySet()){
@@ -80,6 +82,15 @@ public class ForwardProcess {
     }
     
     private String C(String b){
-        return "";
+        String result = "";
+        for(int i = 0; i < b.length(); ++i){
+            if(!numIndexMap.containsKey(i)){
+                result += (int) b.charAt(i);
+            }else{
+                result += b.charAt(i);
+            }
+        }
+        System.out.println("C : " + result);
+        return result;
     }
 }
