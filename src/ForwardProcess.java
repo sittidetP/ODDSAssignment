@@ -1,3 +1,7 @@
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,15 +14,20 @@
  */
 public class ForwardProcess {
     int numInput;
+    String numStr;
+    
+    Map<Integer, Integer> numIndexMap; //Key เป็นตำแหน่งของเลขใน A , Value เป็น เป็นเลขที่ในแต่ละหลัก
     //String[] numStr;
 
     public ForwardProcess(int numInput) {
         this.numInput = numInput;
+        numStr = numInput+"";
+        numIndexMap = new LinkedHashMap<>();
     }
     
     public void StartForwardProcess(int num){
         String resultA = A(num);
-        B(resultA);
+        String resultB = B(resultA);
     }
     
     private String A(int num){
@@ -32,22 +41,42 @@ public class ForwardProcess {
             result = "Odd" + numDiv10;
         }
         
+        numIndexMap.put(result.length()-1 , numDiv10);
+        
         if(numMod10 % 2 == 0){ //หาว่าเลขตัวหลัง เป็นเลขคี่หรือเลขคู่
             result += "Even" + numMod10;
         }else{
             result += "Odd" + numMod10;
         }
+        
+        numIndexMap.put(result.length() - 1, numMod10);
+        
+        /*
+        for(Map.Entry entry: numIndexMap.entrySet()){
+            System.out.println("Key : " + entry.getKey() + ", Value : " + entry.getValue());
+        }
+        */
         System.out.println("A : " + result);
         return result;
     }
     
     private String B(String a){
-        //int amountOfNum = 0;
-        String cleanA = a.replaceAll("\\D+", ""); //เอาตัวอักษรออกให้หมด (แทนที่ตัวอักษรที่ไม่ใช่ตัวเลข(0 - 9) ด้วย "")
-        System.out.println(cleanA);
-        System.out.println(a);
-        System.out.println(a.toUpperCase());
-        return "";
+        String upperA = a.toUpperCase();
+        int startStrRound = 0;
+        String result = "";
+        for(Map.Entry entry: numIndexMap.entrySet()){
+            int numIndex = (int)entry.getKey();
+            if(numIndex == -1)
+                continue;
+            for(int i = startStrRound; i < numIndex; ++i){
+                result+=(upperA.charAt(numIndex - 1 - i + startStrRound));
+                //System.out.println("ch : " + upperA.charAt(numIndex - 1 - i + startStrRound) + ", index : " + (numIndex - 1 - i + startStrRound));
+            }
+            startStrRound = numIndex + 1;
+            result += entry.getValue();
+        }
+        System.out.println("B : " + result);
+        return result;
     }
     
     
