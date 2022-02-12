@@ -79,7 +79,7 @@ public class ForwardProcess {
         return result;
     }
     
-    
-    
-    
+    private String C(String b){
+        return "";
+    }
 }
