@@ -16,6 +16,7 @@ public class MainProcess {
         Scanner scan = new Scanner(System.in);
         int num = scan.nextInt();
         ForwardProcess fwp = new ForwardProcess(num);
-        fwp.StartForwardProcess(num);
+        String forwardStr = fwp.StartForwardProcess(num);
+        BackwardProcess bwp = new BackwardProcess(forwardStr);
     }
 }
