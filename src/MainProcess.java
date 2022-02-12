@@ -1,4 +1,5 @@
 
+import java.util.Map;
 import java.util.Scanner;
 
 /*
@@ -16,7 +17,8 @@ public class MainProcess {
         Scanner scan = new Scanner(System.in);
         int num = scan.nextInt();
         ForwardProcess fwp = new ForwardProcess(num);
-        String forwardStr = fwp.StartForwardProcess(num);
-        BackwardProcess bwp = new BackwardProcess(forwardStr);
+        Map forwardStrMap = fwp.StartForwardProcess(num);
+        BackwardProcess bwp = new BackwardProcess(forwardStrMap, fwp.getResultnFwdStr());
+        bwp.StartBackwardProcess();
     }
 }
